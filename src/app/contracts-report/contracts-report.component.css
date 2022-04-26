@@ -1,0 +1,29 @@
+*{
+font-size: small;
+}
+table{
+  table-layout: fixed;
+  border-collapse: collapse;
+  border: 1px solid purple;
+  width: 100% !important;
+}
+tr td{
+  border: 1px solid purple;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+td, tr, th{
+  text-align: center;
+  border-bottom: purple;
+}
+
+@media print {
+  table {
+    border: solid #000 !important;
+    border-width: 1px 0 0 1px !important;
+  }
+  th, td {
+    border: solid #000 !important;
+    border-width: 0 1px 1px 0 !important;
+  }
+}

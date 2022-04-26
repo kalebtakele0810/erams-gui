@@ -1,0 +1,51 @@
+<div class="h-100 mt-3 mb-3">
+  <ngx-spinner [fullScreen]="false" type="ball-clip-rotate-multiple" size="medium" name="loading">
+    <p class="loading">Loading...</p>
+  </ngx-spinner>
+
+  <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Number of records return {{ numberOfRecords }}</th>
+      <th>Fiscal Year: {{ fiscalYear }}</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr>
+      <th>Contract Number</th>
+      <th>Contract Name</th>
+      <th>Budget Year</th>
+      <th>Budget</th>
+      <th>Cumulative Spent Against Annual Budget</th>
+      <th>Cumulative Spent Against Annual Budget (%)</th>
+      <th>Last Measurement Date</th>
+      <th>Directorate</th>
+      <th>Team Leader Name</th>
+      <th>Team Leader Telephone</th>
+      <th>Contract Actual Completion Date</th>
+    </tr>
+    </thead>
+    <tbody class="table-border-bottom-0">
+    <tr *ngFor="let contract of contracts">
+      <td>{{ contract.contractNumber }}</td>
+      <td>{{ contract.contractName }}</td>
+      <td>{{ contract.budgetYear }}</td>
+      <td>{{ contract.budget }}</td>
+      <td>{{ contract.cumulativeSpentAgainstAnnualBudget }}</td>
+      <td>{{ contract.cumulativeSpentAgainstAnnualBudgetPercent }}</td>
+      <td>{{ contract.lastMeasurementDate }}</td>
+      <td>{{ contract.directorate }}</td>
+      <td>{{ contract.teamLeaderName }}</td>
+      <td>{{ contract.teamLeaderTelephone }}</td>
+      <td>{{ contract.contractCompletionDate }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

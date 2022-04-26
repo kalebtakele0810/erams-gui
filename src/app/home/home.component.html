@@ -1,0 +1,107 @@
+<app-navbar></app-navbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" [opened]="opened">
+    <aside id="layout-menu" class="menu-vertical menu bg-menu-theme mt-1" style="margin-top: 2em"
+           data-bg-class="bg-menu-theme">
+      <div class="app-brand demo ">
+        <p class="text-center" style="margin-top: 1.2em">
+          <img src="assets/img/icons/brands/logo.png" width="48" height="48">
+        </p>
+        <a href="index.html" class="app-brand-link">
+          <span class="app-brand-logo demo">
+      </span>
+          <span class="app-brand-text demo menu-text fw-bolder ms-2">ERAMS</span>
+        </a>
+
+        <a class="layout-menu-toggle menu-link text-large ms-auto d-xl-none" (click)="hide()">
+          <i class="bx bx-chevron-left bx-sm align-middle"></i>
+        </a>
+      </div>
+
+      <div class="menu-inner-shadow"></div>
+
+
+      <ul class="menu-inner py-1 overflow-auto">
+
+        <!-- Dashboard -->
+        <li class="menu-item active">
+          <a class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-layout"></i>
+            <div data-i18n="Layouts">Project Planning and Budgeting</div>
+          </a>
+          <ul class="menu-sub">
+            <li class="menu-item">
+              <a routerLink="/home/add-project" class="menu-link" (click)="sidenav.toggle()">
+                <div data-i18n="Without menu">Data Entry</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a class="menu-link menu-toggle">
+                <div data-i18n="Without navbar">Reports</div>
+              </a>
+              <ul class="menu-sub ms-2">
+                <li class="menu-item">
+                  <a routerLink="/home/contracts-report" [queryParams]="{type: 'minimum'} " class="menu-link"
+                     (click)="sidenav.toggle()">
+                    <div data-i18n="Without Menu">Minimum Date</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a routerLink="/home/contracts-report" [queryParams]="{type: 'last'} " class="menu-link"
+                     (click)="sidenav.toggle()">
+                    <div data-i18n="Without Menu">Last Fiscal Year</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a routerLink="/home/contracts-report" [queryParams]="{type: 'current'} " class="menu-link"
+                     (click)="sidenav.toggle()">
+                    <div data-i18n="Without Menu">Current Fiscal Year</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+
+        <!-- Layouts -->
+        <li class="menu-item">
+          <a href="javascript:void(0);" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-layout"></i>
+            <div data-i18n="Layouts">Contract Information</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="javascript:void(0);" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-money"></i>
+            <div data-i18n="Layouts">Cost Management</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="javascript:void(0);" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-money"></i>
+            <div data-i18n="Layouts">Performance Appraisal</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="javascript:void(0);" class="menu-link">
+            <i class="menu-icon tf-icons bx bxs-file-pdf"></i>
+            <div data-i18n="Layouts">User Manual</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="javascript:void(0);" class="menu-link">
+            <i class="menu-icon tf-icons bx bxs-file-pdf"></i>
+            <div data-i18n="Layouts">Correspondence Template</div>
+          </a>
+        </li>
+      </ul>
+    </aside>
+  </mat-sidenav>
+  <mat-sidenav-content style="height: 100vh">
+    <div class="alert-dark" style="width: 3em; cursor: pointer" (click)="sidenav.toggle()">
+      <i  [ngClass]="sidenav.opened ? 'bx bx-chevron-left bx-md': 'bx bx-chevron-right bx-md'"></i></div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

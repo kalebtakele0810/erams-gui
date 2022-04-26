@@ -1,0 +1,151 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav [(opened)]="opened" position="end" style="width: 500px !important;">
+    <form class="example-form mt-5" style="margin-left: auto;margin-right:auto; width: 75% !important;">
+      <mat-form-field class="example-full-width" appearance="outline"
+                      style="margin-left: auto;margin-right:auto; width: 100% !important;">
+        <mat-label>Contract Name</mat-label>
+        <input type="text" matInput [formControl]="contractSearchControl" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayContract">
+          <mat-option *ngFor="let contract of filteredContracts" [value]="contract" style="font-size: 0.8em">
+            {{contract.contractNumber }} {{ contract.contractName}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+    <button class="btn btn-secondary" style="margin-right: auto; margin-left: auto; width: 15%"
+            (click)="openContract()">Ok
+    </button>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content-wrapper">
+      <div class="container-xxl container-p-y">
+        <div class="d-flex justify-content-between">
+          <div class="row mt-0 mb-0">
+            <ul class="nav nav-pills flex-column flex-md-row mb-0">
+              <li class="nav-item"><a class="nav-link" routerLink="/home/add-project"><i
+                class="bx bxl-product-hunt me-1"></i> Project</a></li>
+              <li class="nav-item"><a class="nav-link active" routerLink="/home/add-contracts"><i
+                class="bx bxs-hand-left me-1"></i> Contract</a></li>
+            </ul>
+          </div>
+          <div class="row mb-0">
+            <div class="col-lg-12">
+              <div class="d-flex flex-row-reverse bd-highlight">
+                <div class="p-2 bd-highlight">
+                  <button class="btn btn-success" (click)="save()"><i class="menu-icon bx bx-save"></i>Save</button>
+                </div>
+                <div class="p-2 bd-highlight">
+                  <button class="btn btn-success" (click)="openDrawer()">
+                    <i class="menu-icon bx bx-folder-open"></i>Open
+                  </button>
+                </div>
+                <div class="p-2 bd-highlight">
+                  <button class="btn btn-primary" (click)="resetForm()"><i class="menu-icon bx bx-folder-plus"></i>New
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-0">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <form [formGroup]="contractFormGroup">
+                  <div class="col-md-12 mb-0">
+                    <mat-form-field class="example-full-width" appearance="outline"
+                                    style="margin-left: auto;margin-right:auto; width: 100% !important;">
+                      <mat-label>Project Name</mat-label>
+                      <input type="text" matInput [formControl]="projectSearchControl" [matAutocomplete]="autoProject">
+                      <mat-autocomplete #autoProject="matAutocomplete" [displayWith]="displayFn">
+                        <mat-option (onSelectionChange)="projectChanged(project)" *ngFor="let project of filteredOptions" [value]="project" style="font-size: 0.8em">
+                          {{project.number }} {{ project.name}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-12 mb-0">
+                    <label class="form-label" for="contractType">Contract Types</label>
+                    <select id="contractType" class="select2 form-select" (change)="changeContractType($event)">
+                      <option value=""></option>
+                      <option *ngFor="let contract of contractTypes" [ngValue]="contractType">{{ contract }}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-12 mb-0" *ngIf="displayAssociatedDesignContract">
+                    <label class="form-label" for="associatedDesignContract">Associated Design Contract</label>
+                    <select id="associatedDesignContract" class="select2 form-select" formControlName="designContract">
+                      <option value=""></option>
+                      <option *ngFor="let contract of designContracts" [ngValue]="contract">{{ contract.contractName }}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-12 mb-0" *ngIf="displayAssociatedWorksContract">
+                    <label class="form-label" for="associatedWorkContract">Associated Work Contract</label>
+                    <select id="associatedWorkContract" class="select2 form-select" formControlName="workContract">
+                      <option value=""></option>
+                      <option *ngFor="let contract of workContracts" [ngValue]="contract">{{ contract.contractName }}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-12 mb-0" *ngIf="displayAssociatedDesignAndBuildContract">
+                    <label class="form-label" for="associatedDesignAndBuildContract">Associated Design And Build
+                      Contract</label>
+                    <select id="associatedDesignAndBuildContract" class="select2 form-select" formControlName="designAndBuildContract">
+                      <option value=""></option>
+                      <option *ngFor="let contract of designAndBuildContracts"
+                              [ngValue]="contract">{{ contract.contractName }}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-12 mb-0">
+                    <label for="contractNumber" class="form-label" >Contract Number</label>
+                    <input id="contractNumber" type="text" class="form-control" name="contractNumber" formControlName="contractNumber">
+                  </div>
+                  <div class="col-md-12 mb-0">
+                    <label for="contractName" class="form-label">Contract Name</label>
+                    <input id="contractName" type="text" class="form-control" formControlName="contractName" name="contractName">
+                  </div>
+                  <div class="row col-md-12">
+                    <div class="col-md-6 mb-0">
+                      <label for="budgetYear" class="form-label">Budget Year(E.C)</label>
+                      <input id="budgetYear" type="number" class="form-control" formControlName="budgetYear"
+                             name="budgetYear">
+                    </div>
+                    <div class="col-md-6 mb-0">
+                      <label for="budget" class="form-label">Budget</label>
+                      <input id="budget" type="number" class="form-control" formControlName="budget" name="budget">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <h4>Project Associated Contracts</h4>
+                <div class="table-responsive text-nowrap">
+                  <table class="table">
+                    <thead>
+                    <tr>
+                      <th>Contract Name</th>
+                      <th>Contract Type</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                    <tr *ngFor="let contract of contracts">
+                      <td style="width: 50%">{{ contract.contractName }}</td>
+                      <td style="width: 50%">{{ contract.contractType }}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" name="save" color = "#fff" type = "ball-scale-ripple-multiple" [fullScreen] = "true"><p style="color: white" > Saving... </p></ngx-spinner>
